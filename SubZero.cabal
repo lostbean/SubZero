@@ -1,58 +1,62 @@
-name:           SubZero
-version:        0.1.1
-cabal-version:  >= 1.8
-build-type:     Simple
-license:        GPL-3
-license-file:   LICENSE
-maintainer:     Edgar Gomes de Araujo
-stability:      experimental
+name:          SubZero
+version:       0.1.1
+cabal-version: >=1.8
+build-type:    Simple
+license:       GPL-3
+license-file:  LICENSE
+maintainer:    Edgar Gomes de Araujo
+stability:     experimental
 homepage:
 package-url:
-bug-reports:    talktoedgar@gmail.com
-synopsis:       Library for subdivision surfaces
-description: Library to create and transforms smooth subdivision surfaces
+bug-reports:   talktoedgar@gmail.com
+synopsis:      Library for subdivision surfaces
+description:
+  Library to create and transforms smooth subdivision surfaces
   - Based on Catmull-Clark rules. But extendable for others schemes
   - Full crease/corne edge/vertex
-category:       Math
-author:         Edgar Gomes de Araujo
 
-Flag test
-    Description:      Build the test suite, including an executable to run it.
-    Default:          False
+category:      Math
+author:        Edgar Gomes de Araujo
 
-Library
-    ghc-options: -Wall
-                 -O2
-                 -funbox-strict-fields
-                 -fwarn-tabs
-                 -auto-all
-                 -caf-all
+flag test
+  description: Build the test suite, including an executable to run it.
+  default:     False
 
-    build-depends:    base        == 4.*
-                    , containers  >= 0.5
-                    , vector      >= 0.10
-                    , primitive   >= 0.5
-                    , hammer      >= 0.3
-                    , linear-vect >= 0.2
+library
+  ghc-options:
+    -Wall -O2 -funbox-strict-fields -fwarn-tabs -auto-all -caf-all
 
-    exposed-modules:  SubZero
-                    , SubZero.Internal
+  build-depends:
+      base         >=4    && <5
+    , containers   >=0.5
+    , hammer       >=0.3
+    , linear-vect  >=0.2
+    , primitive    >=0.5
+    , vector       >=0.10
 
-    other-modules:    SubZero.SubOne
-                    , SubZero.SubTwo
+  exposed-modules:
+    SubZero
+    SubZero.Internal
 
-    exposed:          True
-    buildable:        True
-    hs-source-dirs:   src
+  other-modules:
+    SubZero.SubOne
+    SubZero.SubTwo
 
-Executable SubZero-test
-    hs-source-dirs:   profile
-    Main-Is:          Main.hs
-    Build-depends:    SubZero
-                    , base       == 4.*
-                    , hammer     >= 0.3
-                    , vector     >= 0.10
-    if flag(test)
-       Buildable:     True
-    else
-       Buildable:     False
+  exposed:         True
+  buildable:       True
+  hs-source-dirs:  src
+
+executable SubZero-test
+  hs-source-dirs: profile
+  main-is:        Main.hs
+  build-depends:
+      base     >=4    && <5
+    , hammer   >=0.3
+    , SubZero
+    , vector   >=0.10
+
+  if flag(test)
+    buildable: True
+
+  else
+    buildable: False
