@@ -24,7 +24,7 @@ flag test
 
 library
   ghc-options:
-    -Wall -O2 -funbox-strict-fields -fwarn-tabs -auto-all -caf-all
+    -Wall -O2 -funbox-strict-fields -fwarn-tabs -fprof-auto -fprof-cafs
 
   build-depends:
       base         >=4    && <5

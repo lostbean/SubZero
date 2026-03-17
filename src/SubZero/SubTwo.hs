@@ -4,6 +4,7 @@
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE TypeSynonymInstances #-}
 
 module SubZero.SubTwo (
@@ -44,6 +45,7 @@ import Data.IntMap (IntMap)
 import qualified Data.IntMap as IM
 import Data.IntSet (IntSet)
 import qualified Data.IntSet as IS
+import Data.Kind (Type)
 import qualified Data.List as L
 import Data.Map (Map)
 import qualified Data.Map as M
@@ -122,7 +124,7 @@ data SubTwo v
     deriving (Show)
 
 class TableAccess a where
-    type Ix a :: *
+    type Ix a :: Type
     readM :: (PrimMonad m) => VM.MVector (PrimState m) a -> Ix a -> m a
     writeM :: (PrimMonad m) => VM.MVector (PrimState m) a -> Ix a -> a -> m ()
     (=!) :: Vector a -> Ix a -> a
@@ -597,7 +599,7 @@ getOtherEnd vid (_, _, v1, v2)
     | otherwise = Nothing
 
 getOtherEnds :: VertexID -> Vector EdgeConn -> Vector VertexID
-getOtherEnds vid = V.map (\(Just x) -> x) . V.filter isJust . V.map (getOtherEnd vid)
+getOtherEnds vid = V.map fromJust . V.filter isJust . V.map (getOtherEnd vid)
 
 isOnBoader :: EdgeConn -> Bool
 isOnBoader (Just _, Just _, _, _) = False
