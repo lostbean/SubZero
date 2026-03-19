@@ -1,6 +1,6 @@
 name:          SubZero
 version:       0.1.1
-cabal-version: >=1.8
+cabal-version: >=1.10
 build-type:    Simple
 license:       MIT
 license-file:  LICENSE
@@ -37,18 +37,18 @@ library
   exposed-modules:
     SubZero
     SubZero.Internal
-
-  other-modules:
     SubZero.SubOne
     SubZero.SubTwo
 
-  exposed:         True
-  buildable:       True
-  hs-source-dirs:  src
+  exposed:          True
+  buildable:        True
+  hs-source-dirs:   src
+  default-language: Haskell2010
 
 executable SubZero-test
-  hs-source-dirs: profile
-  main-is:        Main.hs
+  hs-source-dirs:   profile
+  main-is:          Main.hs
+  default-language: Haskell2010
   build-depends:
       base     >=4    && <5
     , hammer   >=0.3
@@ -60,3 +60,19 @@ executable SubZero-test
 
   else
     buildable: False
+
+test-suite SubZero-tests
+  type:             exitcode-stdio-1.0
+  hs-source-dirs:   test
+  main-is:          Main.hs
+  build-depends:
+      base              >=4    && <5
+    , linear-vect       >=0.2
+    , SubZero
+    , tasty             >=0.7
+    , tasty-hunit       >=0.8
+    , tasty-quickcheck  >=0.8
+    , vector            >=0.10
+
+  ghc-options:      -Wall
+  default-language: Haskell2010

@@ -44,16 +44,16 @@ Implements subdivision for open line segments. Open ends are treated as crease v
 
 **Key functions:**
 
-| Function | Signature | Description |
-|---|---|---|
-| `mkSubOne` | `Vector Int -> Vector v -> Maybe (SubOne v)` | Construct a subdivision line from index and point arrays. Returns `Nothing` if fewer than 2 indices. |
-| `mkSubOneMesh` | `Vector Int -> Maybe SubOneMesh` | Construct just the topology (no geometry). |
-| `mkSubOneFromMesh` | `Vector v -> SubOneMesh -> SubOne v` | Reconstruct a `SubOne` from points and an existing mesh topology. |
-| `subdivideOne` | `SubOne v -> SubOne v` | One level of subdivision. |
-| `subdivideOneN` | `Int -> SubOne v -> SubOne v` | N levels of subdivision. |
-| `subOneLimit` | `SubOne v -> Vector v` | Compute the limit positions (where vertices converge under infinite subdivision). |
-| `subOneTan` | `SubOne v -> Vector v` | Compute normalized tangent vectors at each vertex via finite differences. |
-| `renderSubOne` | `SubOne v -> VTK v` | Render to a VTK polyline. |
+| Function           | Signature                                    | Description                                                                                          |
+| ------------------ | -------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `mkSubOne`         | `Vector Int -> Vector v -> Maybe (SubOne v)` | Construct a subdivision line from index and point arrays. Returns `Nothing` if fewer than 2 indices. |
+| `mkSubOneMesh`     | `Vector Int -> Maybe SubOneMesh`             | Construct just the topology (no geometry).                                                           |
+| `mkSubOneFromMesh` | `Vector v -> SubOneMesh -> SubOne v`         | Reconstruct a `SubOne` from points and an existing mesh topology.                                    |
+| `subdivideOne`     | `SubOne v -> SubOne v`                       | One level of subdivision.                                                                            |
+| `subdivideOneN`    | `Int -> SubOne v -> SubOne v`                | N levels of subdivision.                                                                             |
+| `subOneLimit`      | `SubOne v -> Vector v`                       | Compute the limit positions (where vertices converge under infinite subdivision).                    |
+| `subOneTan`        | `SubOne v -> Vector v`                       | Compute normalized tangent vectors at each vertex via finite differences.                            |
+| `renderSubOne`     | `SubOne v -> VTK v`                          | Render to a VTK polyline.                                                                            |
 
 ### `SubZero.SubTwo` (2D surface subdivision)
 
@@ -80,17 +80,17 @@ Each subdivision step splits every triangle into 4 sub-triangles by inserting a 
 
 **Key functions:**
 
-| Function | Signature | Description |
-|---|---|---|
-| `mkSubTwo` | `Vector v -> [(Int,Int,Int)] -> [Int] -> SubTwo v` | Construct a subdivision surface from a point array, triangle list, and corner vertex indices. |
-| `mkSubTwoFromMesh` | `Vector v -> MeshConn -> SubTwo v` | Reconstruct from points and an existing mesh topology. |
-| `buildMesh` | `[(Int,Int,Int)] -> [Int] -> MeshConn` | Build the mesh connectivity from triangles and corner indices. |
-| `subdivideTwo` | `SubTwo v -> SubTwo v` | One level of subdivision. Splits each triangle into 4. |
-| `subdivideTwoN` | `Int -> SubTwo v -> SubTwo v` | N levels of subdivision. |
-| `subTwoLimit` | `SubTwo v -> SubTwo v` | Compute limit surface positions for all vertices. |
-| `subTwoNormals` | `SubTwo Vec3D -> Vector Vec3D` | Compute vertex normals (cross product of tangent vectors). |
-| `subTwoTans` | `SubTwo Vec3D -> Vector (Vec3D, Vec3D)` | Compute two tangent vectors at each vertex. |
-| `renderSubTwo` | `SubTwo Vec3D -> VTK Vec3D` | Render to a VTK triangulation. |
+| Function           | Signature                                          | Description                                                                                   |
+| ------------------ | -------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `mkSubTwo`         | `Vector v -> [(Int,Int,Int)] -> [Int] -> SubTwo v` | Construct a subdivision surface from a point array, triangle list, and corner vertex indices. |
+| `mkSubTwoFromMesh` | `Vector v -> MeshConn -> SubTwo v`                 | Reconstruct from points and an existing mesh topology.                                        |
+| `buildMesh`        | `[(Int,Int,Int)] -> [Int] -> MeshConn`             | Build the mesh connectivity from triangles and corner indices.                                |
+| `subdivideTwo`     | `SubTwo v -> SubTwo v`                             | One level of subdivision. Splits each triangle into 4.                                        |
+| `subdivideTwoN`    | `Int -> SubTwo v -> SubTwo v`                      | N levels of subdivision.                                                                      |
+| `subTwoLimit`      | `SubTwo v -> SubTwo v`                             | Compute limit surface positions for all vertices.                                             |
+| `subTwoNormals`    | `SubTwo Vec3D -> Vector Vec3D`                     | Compute vertex normals (cross product of tangent vectors).                                    |
+| `subTwoTans`       | `SubTwo Vec3D -> Vector (Vec3D, Vec3D)`            | Compute two tangent vectors at each vertex.                                                   |
+| `renderSubTwo`     | `SubTwo Vec3D -> VTK Vec3D`                        | Render to a VTK triangulation.                                                                |
 
 **Subdivision vertex rules:**
 
@@ -185,14 +185,14 @@ This is useful in animation or optimization workflows where vertex positions cha
 
 ## Dependencies
 
-| Package | Version | Purpose |
-|---|---|---|
-| `base` | >= 4, < 5 | Standard library |
-| `containers` | >= 0.5 | `IntMap`, `IntSet`, `Map` for mesh construction |
-| `hammer` | >= 0.3 | VTK rendering (`Hammer.VTK`) and segment sorting (`Hammer.Math.SortSeq`) |
-| `linear-vect` | >= 0.2 | Linear algebra types (`Vec2D`, `Vec3D`) and operations |
-| `primitive` | >= 0.5 | Low-level mutable operations for in-place mesh mutation during subdivision |
-| `vector` | >= 0.10 | Core data structure for all arrays |
+| Package       | Version   | Purpose                                                                    |
+| ------------- | --------- | -------------------------------------------------------------------------- |
+| `base`        | >= 4, < 5 | Standard library                                                           |
+| `containers`  | >= 0.5    | `IntMap`, `IntSet`, `Map` for mesh construction                            |
+| `hammer`      | >= 0.3    | VTK rendering (`Hammer.VTK`) and segment sorting (`Hammer.Math.SortSeq`)   |
+| `linear-vect` | >= 0.2    | Linear algebra types (`Vec2D`, `Vec3D`) and operations                     |
+| `primitive`   | >= 0.5    | Low-level mutable operations for in-place mesh mutation during subdivision |
+| `vector`      | >= 0.10   | Core data structure for all arrays                                         |
 
 Both `hammer` and `linear-vect` are sibling packages in the same repository.
 
@@ -216,6 +216,29 @@ cabal build --allow-newer
 ```bash
 stack build
 ```
+
+### Testing & Coverage
+
+The project includes a comprehensive test suite using `tasty`, `HUnit`, and `QuickCheck`.
+
+#### Running Tests
+
+To run the automated tests:
+
+```bash
+cabal test SubZero-tests
+```
+
+#### Tracking Coverage with HPC
+
+To generate a test coverage report using **HPC (Haskell Program Coverage)**:
+
+1. Run the tests with coverage enabled:
+   ```bash
+   cabal test SubZero-tests --enable-coverage
+   ```
+2. The coverage report will be generated in HTML format. Look for the output path in the terminal, typically:
+   `dist-newstyle/build/.../SubZero-0.1.1/t/SubZero-tests/hpc/vanilla/html/hpc_index.html`
 
 ### Test / Profile Executable
 
