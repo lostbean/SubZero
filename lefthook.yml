@@ -1,5 +1,5 @@
 pre-commit:
   commands:
     format:
-      glob: "*"
-      run: nix fmt {staged_files} && git add {staged_files}
+      glob: "*.{hs,cabal,nix,yml,md}"
+      run: nix fmt -- {staged_files} && git add {staged_files}
